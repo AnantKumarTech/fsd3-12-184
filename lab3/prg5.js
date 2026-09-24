@@ -1,16 +1,28 @@
 import http from "http";
-
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { contentType: "application/json" });
-  const product = {
-    name: "Mobile",
-    price: 2500,
-    discount: "5%",
-    company: "Realme",
-  };
-  res.end(JSON.stringify(product));
-});
+  if (req.url === "/") {
+    res.write("<h1>Home Page</h1>");
+    res.end(`
+      <a herf="/product">Product Page </a><br>
+      <a herf="/contact">contact</a>
+    `);
+  } else if (req.url === "/product") {
+    res.end(`
+        <h1>Iphone XL</h1>
+        <h2>Price: 90000</h2>
+        <h3>Discount: 30%</h3>
+    `);
+  } else if (req.url === "/contact") {
+    res.end("<h1>Contact Us</h1>");
+  } else {
+    res.statusCode = 404;
 
+    res.end(`
+        <h1>Page Not Found</h1>
+        <a href="/">HOME</a>
+    `);
+  }
+});
 server.listen(3000, () => {
   console.log("Server is running...");
 });
