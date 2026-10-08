@@ -1,7 +1,16 @@
 import express from "express";
-
+import { products } from "./data.js";
 const app = express();
-
+//returns name,image ,price of all products
+app.get(".api.products", (req, res) => {
+  let sortedProduct = products.map(({ name, image, price, id }) => ({
+    name,
+    image,
+    price,
+    id,
+  }));
+  res.status(200).json({ count: sortedProduct.length, data: sortedProduct });
+});
 app.use((req, res) => {
   res.status(404).send("<h1>Page not Found</h1>");
 });
